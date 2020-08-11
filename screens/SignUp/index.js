@@ -10,7 +10,7 @@ import Logo from "../../components/Logo";
 import { LOGIN_API } from '../../config/api';
 import { PASSPORT_INVALID_CREDENTIALS, INVALID_CREDENTIALS } from '../../config/error_message';
 
-export default function SignIn(props) {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -40,7 +40,7 @@ export default function SignIn(props) {
       <Logo />
 
       <Header>Bine ai venit la Johnny's Barber Shop!</Header>
-      <Text>Autentificare</Text>
+      <Text>Inregistrare</Text>
 
       {errorMessage &&
         <Text style={{ color: 'red'}}>
@@ -76,7 +76,6 @@ export default function SignIn(props) {
           onPress={handleLogin} />
         <Button
           title="Nu ai un cont? Inregistreaza-te aici!"
-          onPress={() => props.navigation.navigate('Register')}
           buttonStyle={styles.button}
         />
       </View>
