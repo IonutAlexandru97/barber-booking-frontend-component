@@ -1,0 +1,1 @@
+export const PASSPORT_INVALID_CREDENTIALS = 'Request failed with status code 400';

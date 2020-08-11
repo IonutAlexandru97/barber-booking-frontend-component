@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
 import axios from 'axios';
@@ -7,18 +7,18 @@ import styles from "./styles";
 import Background from "../../components/Background";
 import Header from "../../components/Header";
 import Logo from "../../components/Logo";
+import { LOGIN_API } from '../../config/api';
+import { PASSPORT_INVALID_CREDENTIALS } from '../../config/error_message';
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const [user, setUser] = useState();
 
-
-  const handleLogin = event => {
+  const handleLogin = () => {
     axios({
       method: 'post',
-      url: 'http://localhost:5000/api/login',
+      url: LOGIN_API,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -27,9 +27,11 @@ export default function SignIn() {
         password: password
       }
     }).then(response => {
-      console.log(response.data.first_name);
+      console.log(response.status);
     }).catch(error => {
-      console.log(error);
+      if(error.message == PASSPORT_INVALID_CREDENTIALS) {
+        setErrorMessage('Username or password invalid! Please try again!')
+      }
     })
   } 
   return (
@@ -38,6 +40,12 @@ export default function SignIn() {
 
       <Header>Bine ai venit la Johnny's Barber Shop!</Header>
       <Text>Autentificare</Text>
+
+      {errorMessage &&
+        <Text style={{ color: 'red'}}>
+          {errorMessage}
+        </Text>
+      }
 
       <Input
         value={email}
