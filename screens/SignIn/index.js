@@ -26,8 +26,8 @@ export default function SignIn(props) {
         email: email,
         password: password
       }
-    }).then(response => {
-      console.log(response.status);
+    }).then(() => {
+        props.navigation.navigate("Acasa");
     }).catch(error => {
       if(error.message == PASSPORT_INVALID_CREDENTIALS) {
         setErrorMessage(INVALID_CREDENTIALS)

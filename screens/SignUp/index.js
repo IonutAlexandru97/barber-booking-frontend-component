@@ -1,40 +1,47 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Text, Input, Button } from "react-native-elements";
-import axios from 'axios';
+import axios from "axios";
 
 import styles from "./styles";
 import Background from "../../components/Background";
 import Header from "../../components/Header";
 import Logo from "../../components/Logo";
-import { LOGIN_API } from '../../config/api';
-import { PASSPORT_INVALID_CREDENTIALS, INVALID_CREDENTIALS } from '../../config/error_message';
+import { REGISTER_API } from "../../config/api";
+import {
+  UNIQUE_EMAIL_CONSTRAINT,
+  INVALID_CREDENTIALS,
+  UNIQUE_EMAIL_MESSAGE,
+} from "../../config/error_message";
 
-export default function SignUp() {
+export default function SignUp(props) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleLogin = () => {
+  const handelRegister = (props) => {
     axios({
-      method: 'post',
-      url: LOGIN_API,
+      method: "post",
+      url: REGISTER_API,
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       data: {
+        first_name: firstName,
+        last_name: lastName,
         email: email,
-        password: password
-      }
-    }).then(response => {
-      console.log(response.status);
-    }).catch(error => {
-      if(error.message == PASSPORT_INVALID_CREDENTIALS) {
-        setErrorMessage(INVALID_CREDENTIALS)
-      }
-      setErrorMessage(error.message)
+        password: password,
+      },
     })
-  } 
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        setErrorMessage(UNIQUE_EMAIL_MESSAGE)
+      });
+  };
   return (
     <Background>
       <Logo />
@@ -42,11 +49,27 @@ export default function SignUp() {
       <Header>Bine ai venit la Johnny's Barber Shop!</Header>
       <Text>Inregistrare</Text>
 
-      {errorMessage &&
-        <Text style={{ color: 'red'}}>
-          {errorMessage}
-        </Text>
-      }
+      {errorMessage && <Text style={{ color: "red" }}>{errorMessage}</Text>}
+
+      <Input
+        value={lastName}
+        onChangeText={(lastName) => setLastName(lastName)}
+        placeholderTextColor="#c4c3cb"
+        label="Nume"
+        placeholder="Nume"
+        rightIcon={{ type: "material-icons", name: "account-circle" }}
+        style={styles.loginFormTextInput}
+      />
+
+      <Input
+        value={firstName}
+        onChangeText={(firstName) => setFirstName(firstName)}
+        placeholderTextColor="#c4c3cb"
+        label="Prenume"
+        placeholder="Prenume"
+        rightIcon={{ type: "material-icons", name: "account-circle" }}
+        style={styles.loginFormTextInput}
+      />
 
       <Input
         value={email}
@@ -70,13 +93,15 @@ export default function SignUp() {
       />
 
       <View style={styles.buttonContainer}>
-        <Button 
-          title="Autentificare" 
-          buttonStyle={styles.button}
-          onPress={handleLogin} />
         <Button
-          title="Nu ai un cont? Inregistreaza-te aici!"
+          title="Inregistrare"
           buttonStyle={styles.button}
+          onPress={handelRegister}
+        />
+        <Button
+          title="Ai deja un cont? Autentifica-te aici!"
+          buttonStyle={styles.button}
+          onPress={() => props.navigation.navigate("Login")}
         />
       </View>
     </Background>
