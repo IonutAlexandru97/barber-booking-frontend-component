@@ -6,6 +6,7 @@ import SignIn from "./screens/SignIn";
 import SignUp from './screens/SignUp';
 import Home from './screens/Home';
 
+
 const Stack = createStackNavigator();
 
 function AuthNavigator() {
