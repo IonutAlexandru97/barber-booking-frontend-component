@@ -14,7 +14,7 @@ function AuthNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Login"
+      initialRouteName="Acasa"
     >
       <Stack.Screen name="Login" component={SignIn} />
       <Stack.Screen name="Register" component={SignUp} />
