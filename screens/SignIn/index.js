@@ -27,7 +27,7 @@ export default function SignIn({ navigation }) {
         password: password
       }
     }).then(() => {
-        props.navigation.navigate("Acasa");
+        navigation.navigate("Acasa");
     }).catch(error => {
       if(error.message == PASSPORT_INVALID_CREDENTIALS) {
         setErrorMessage(INVALID_CREDENTIALS)
