@@ -6,7 +6,7 @@ import { ScrollView } from 'react-native';
 import { GET_ALL_SERVICES_API } from '../../config/api';
 import styles from './styles';
 
-export default function Services() {
+export default function Services({ navigation }) {
 
     const [services, setServices] = useState({ data: []});
 
@@ -18,8 +18,6 @@ export default function Services() {
         fetchData();
     }, [GET_ALL_SERVICES_API]);
 
-    console.log(services)
-
     return (
       <ScrollView style={styles.container}>
         {services.data.map((item, i) => (
@@ -30,6 +28,7 @@ export default function Services() {
             price={item.service_value + " " + "RON"}
             info={[item.service_description]}
             button={{ title: 'Fa o programare', icon: 'alarm-add' }}
+            onButtonPress={() => navigation.navigate('Calendar')}
           />
         ))}
       </ScrollView>

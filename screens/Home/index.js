@@ -1,12 +1,14 @@
 import React from "react";
-import { Text } from 'react-native-elements';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Services from '../Services';
-import Cal from '../Calendar';
+import Services from "../Services";
 
 export default function Home() {
+  const Tab = createBottomTabNavigator();
 
-    return(
-        <Cal />
-    )
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Servicii" component={Services} />
+    </Tab.Navigator>
+  );
 }
