@@ -19,6 +19,7 @@ export default function Cal({ navigation }) {
             <Calendar
                 onDayPress={onDayPress}
                 style={styles.calendar}
+                hideArrows={false}
                 theme={{
                     selectedDayBackgroundColor: 'green',
                     todayTextColor: 'red',

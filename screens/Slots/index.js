@@ -9,14 +9,18 @@ export default function Slots({ route }) {
   const { bookingDate } = route.params;
   const [appointment, setAppointment] = useState({ data: [] })
   const slots = {
-    "slots": {
-      "slot1": "9:00 - 10:00",
+      "slot1": {
+         "slot" : "9:00 - 10:00",
+         "color" : "green"
+      },
       "slot2": "10:00 - 11:00",
-      "slot3": "11:00 - 12:00",
+      "slot3": {
+        "slot" : "11:00 - 12:00",
+        "color" : "green"
+      },
       "slot4": "12:00 - 13:00",
       "slot5": "13:00 - 14:00",
       "slot6": "14:00 - 15:00"
-  }
 }
 
 
@@ -31,12 +35,13 @@ export default function Slots({ route }) {
 
 
 const updateStatus = () => {
-  Object.keys(appointment).map((appointmentKey, appointmentIndex) => {
-    Object.keys(appointment[appointmentKey]).map((secAppkey, index) => {
-      Object.keys(slots).map((slotsKey, slotsIndex) => {
-        Object.keys(slots[slotsKey]).forEach((key, index) => {
-          if(slots[slotsKey][key] == appointment[appointmentKey][secAppkey].slot) {
-            
+  Object.keys(appointment).map((appointmentKey) => {
+    Object.keys(appointment[appointmentKey]).map((secAppkey) => {
+      Object.keys(slots).map((slotsKey) => {
+        Object.keys(slots[slotsKey]).forEach((key) => {
+          if(slots[slotsKey][key] == appointment[appointmentKey][secAppkey].slot
+            && bookingDate.day == appointment[appointmentKey][secAppkey].day){
+              slots[slotsKey].color = 'red'
           }
         })
       })
@@ -80,23 +85,23 @@ const createAppointment = (value) => {
   //     );
   //   })
   // );
-  return <View>
+  return <View  style={{ margin: 5 }}>
 
       <Button
-      // buttonStyle={{ backgroundColor: buttonColor.button1.color}}
-      title={slots.slots.slot1}
-      onPress={() => createAppointment(slots.slots.slot1)}
+      buttonStyle={{ backgroundColor: slots.slot1.color}}
+      title={slots.slot1.slot}
+      onPress={() => createAppointment(slots.slot1.slot)}
       />
       <Button
       // buttonStyle={{ backgroundColor: buttonColor.button2}}
-      onPress={() => createAppointment(slots.slots.slot2)}
-      title={slots.slots.slot2}
+      onPress={() => createAppointment(slots.slot2)}
+      title={slots.slot2}
       />
       <Button
-      // buttonStyle={{ backgroundColor: buttonColor.button2}}
-      onPress={() => createAppointment(slots.slots.slot3)}
-      title={slots.slots.slot3}
+      buttonStyle={{ backgroundColor: slots.slot3.color}}
+      title={slots.slot3.slot}
+      onPress={() => createAppointment(slots.slot3.slot)}
       />
 
-  </View>;
+  </View>
 }
